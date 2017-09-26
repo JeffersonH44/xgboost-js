@@ -9,7 +9,7 @@ module.exports = function (xgboost) {
     class XGBoost {
         constructor(options) {
             this.model = create_model();
-            console.log("js pointer", this.model);
+            //console.log("js pointer", this.model);
             set_param(this.model, "objective", "reg:linear");
         }
 

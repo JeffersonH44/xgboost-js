@@ -10,10 +10,10 @@ ifndef DMLC_CORE
 	DMLC_CORE = xgboost/dmlc-core
 endif
 
-CFLAGS = -std=c++11 -Wall -fPIC --memory-init-file 0
+CFLAGS = -std=c++11 -O2 -Wall -fPIC --memory-init-file 0
 CFLAGS += -I$(DMLC_CORE)/include -I$(RABIT)/include -I$(GTEST_PATH)/include
 BUILD_DIR=dist
-EXPORTED_FUNCTIONS="['_create_model', '_set_param', '_train', '_predict', '_free_memory_model', '_free_memory_matrix']"
+EXPORTED_FUNCTIONS="['_create_model', '_set_param', '_train', '_predict', '_free_memory_model']"
 COMPILED_FILES = xgboost/lib/libxgboost.so
 
 all:

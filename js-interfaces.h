@@ -15,10 +15,9 @@ extern "C" {
 
 BoosterHandle* create_model();
 void set_param(BoosterHandle* model, char* arg, char* value);
-void train(float* dataset, float* labels, int samples, int dimensions);
+void train(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations);
 const float* predict(BoosterHandle* model, float* dataset, int samples, int dimensions);
 void free_memory_model(BoosterHandle* model);
-void free_memory_matrix(DMatrixHandle* matrix);
 
 #ifdef __cplusplus
 }
