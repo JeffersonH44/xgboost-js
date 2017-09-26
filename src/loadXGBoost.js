@@ -1,6 +1,8 @@
 module.exports = function (xgboost) {
     /* eslint-disable camelcase */
-    const hi = xgboost.cwrap('hello_world', 'number');
+    const create_model = xgboost.cwrap('create_model', 'number');
+    const free_model = xgboost.cwrap('free_memory_model', null);
+    const set_param = xgboost.cwrap('set_param', null, ['string', 'string', 'number']);
     /*const predict_one_probability = xgboost.cwrap('libsvm_predict_one_probability', 'number', ['number', 'array', 'number', 'number']);
     const add_instance = xgboost.cwrap('add_instance', null, ['number', 'array', 'number', 'number', 'number']);
     const create_svm_nodes = xgboost.cwrap('create_svm_nodes', 'number', ['number', 'number']);
@@ -18,9 +20,13 @@ module.exports = function (xgboost) {
     /* eslint-enable camelcase */
 
     class XGBoost {
-        static hello() {
-            var d = hi();
-            console.log(d);
+        constructor(options) {
+            this.model = create_model();
+            set_param("objective", "reg:linear", this.model);
+        }
+
+        free() {
+            free_model(this.model);
         }
     }
 

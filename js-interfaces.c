@@ -35,5 +35,5 @@ const float* predict(BoosterHandle* model, float* dataset, int samples, int dime
 }
 
 void free_memory_model(BoosterHandle* model) {
-    XGBoosterFree(model);
+    XGBoosterFree(*model);
 }

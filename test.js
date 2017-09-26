@@ -1,6 +1,7 @@
 async function exec() {
     let XGBoost = await require('./wasm');
-    XGBoost.hello();
+    var trainer = new XGBoost();
+    trainer.free();
     return "end of execution!";
 }
 

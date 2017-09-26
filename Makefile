@@ -14,7 +14,7 @@ CFLAGS = -std=c++11 -Wall -O3 -fPIC --memory-init-file 0
 CFLAGS += -I$(DMLC_CORE)/include -I$(RABIT)/include -I$(GTEST_PATH)/include
 BUILD_DIR=dist
 EXPORTED_FUNCTIONS="['_create_model', '_set_param', '_train', '_predict', '_free_memory_model', '_free_memory_matrix']"
-COMPILED_FILES = xgboost/lib/libxgboost.bc
+COMPILED_FILES = xgboost/lib/libxgboost.so
 
 all:
 	cd xgboost; make config=make/minimum.mk; cd ..;
