@@ -7,8 +7,8 @@ BoosterHandle* create_model() {
     return new BoosterHandle();
 }
 
-void set_param(char* arg, char* value, BoosterHandle* model) {
-    XGBoosterSetParam(*model, arg, value);
+void set_param(BoosterHandle* model, char* arg, char* value) {
+    XGBoosterSetParam(model, arg, value);
 }
 
 void train(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations) {

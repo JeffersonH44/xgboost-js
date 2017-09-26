@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 BoosterHandle* create_model();
-void set_param(char* arg, char* value, BoosterHandle* model);
+void set_param(BoosterHandle* model, char* arg, char* value);
 void train(float* dataset, float* labels, int samples, int dimensions);
 const float* predict(BoosterHandle* model, float* dataset, int samples, int dimensions);
 void free_memory_model(BoosterHandle* model);
