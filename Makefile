@@ -19,7 +19,7 @@ COMPILED_FILES = xgboost/lib/libxgboost.so
 all:
 	cd xgboost; make config=make/minimum.mk; cd ..;
 	mkdir -p $(BUILD_DIR)/wasm;
-	$(CXX) $(CFLAGS) js-interfaces.c $(COMPILED_FILES) -o $(BUILD_DIR)/wasm/xgboost.js --pre-js src/wasmPreJS.js -s -s BINARYEN_ASYNC_COMPILATION=1 -s NO_FILESYSTEM=1 -s BINARYEN=1 -s "BINARYEN_METHOD='native-wasm'" -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS)
+	$(CXX) $(CFLAGS) js-interfaces.c $(COMPILED_FILES) -o $(BUILD_DIR)/wasm/xgboost.js --pre-js src/wasmPreJS.js -s BINARYEN_ASYNC_COMPILATION=1 -s NO_FILESYSTEM=1 -s BINARYEN=1 -s "BINARYEN_METHOD='native-wasm'" -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS)
 
 
 #asm: js-interfaces.c svm.o libsvm/svm.h

@@ -2,13 +2,14 @@
 // Created by jefferson on 12/09/17.
 //
 #include "js-interfaces.h"
+#include <cstdio>
 
 BoosterHandle* create_model() {
     return new BoosterHandle();
 }
 
 void set_param(BoosterHandle* model, char* arg, char* value) {
-    XGBoosterSetParam(model, arg, value);
+    XGBoosterSetParam(*model, arg, value);
 }
 
 void train(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations) {
