@@ -2,20 +2,22 @@
 // Created by jefferson on 12/09/17.
 //
 #include "js-interfaces.h"
-#include <cstdio>
 
-BoosterHandle* create_model() {
-    return new BoosterHandle();
+BoosterHandle* create_model(float* train, int rows, int cols) {
+    BoosterHandle* model = new BoosterHandle();
+    DMatrixHandle h_train[1];
 }
 
 void set_param(BoosterHandle* model, char* arg, char* value) {
+    printf("setting param...");
     XGBoosterSetParam(*model, arg, value);
 }
 
-void train(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations) {
+void train_full_model(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations) {
     DMatrixHandle h_train[1];
     XGDMatrixCreateFromMat(dataset, samples, dimensions, -1, &h_train[0]);
     XGDMatrixSetFloatInfo(h_train[0], "label", labels, samples);
+    XGBoosterCreate(h_train, 1, model);
 
     for (int i = 0; i < iterations; ++i) {
         XGBoosterUpdateOneIter(*model, i, h_train[0]);

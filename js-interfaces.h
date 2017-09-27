@@ -5,8 +5,6 @@
 #ifndef XGBOOST_JS_JS_INTERFACES_H
 #define XGBOOST_JS_JS_INTERFACES_H
 
-#include <vector>
-
 #include "xgboost/include/xgboost/c_api.h"
 
 #ifdef __cplusplus
@@ -15,7 +13,7 @@ extern "C" {
 
 BoosterHandle* create_model();
 void set_param(BoosterHandle* model, char* arg, char* value);
-void train(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations);
+void train_full_model(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations);
 const float* predict(BoosterHandle* model, float* dataset, int samples, int dimensions);
 void free_memory_model(BoosterHandle* model);
 
