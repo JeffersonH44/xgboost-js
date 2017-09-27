@@ -41,45 +41,46 @@ int main() {
     for (unsigned int i=0;i<bst_result;i++)
         cout << "label[" << i << "]=" << out_floats[i] << endl;*/
 
-    pair<BoosterHandle*, DMatrixHandle*>* model = create_model((float *) train, train_labels, rows, cols);
+    Model model = create_model((float *) train, train_labels, rows, cols);
 
     // create the booster and load some parameters
-    BoosterHandle* h_booster = model->first;
-    DMatrixHandle* h_train = model->second;
+    //BoosterHandle* h_booster = model->first;
+    //DMatrixHandle* h_train = model->second;
 
-    XGBoosterSetParam(*h_booster, "booster", "gbtree");
-    XGBoosterSetParam(*h_booster, "objective", "reg:linear");
-    XGBoosterSetParam(*h_booster, "max_depth", "5");
-    XGBoosterSetParam(*h_booster, "eta", "0.1");
-    XGBoosterSetParam(*h_booster, "min_child_weight", "1");
-    XGBoosterSetParam(*h_booster, "subsample", "0.5");
-    XGBoosterSetParam(*h_booster, "colsample_bytree", "1");
-    XGBoosterSetParam(*h_booster, "num_parallel_tree", "1");
+    set_param(model, "booster", "gbtree");
+    set_param(model, "objective", "reg:linear");
+    set_param(model, "max_depth", "5");
+    set_param(model, "eta", "0.1");
+    set_param(model, "min_child_weight", "1");
+    set_param(model, "subsample", "0.5");
+    set_param(model, "colsample_bytree", "1");
+    set_param(model, "num_parallel_tree", "1");
 
     // perform 200 learning iterations
-    for (int iter=0; iter<200; iter++)
-        XGBoosterUpdateOneIter(*h_booster, iter, *h_train);
+    train_full_model(model, 200);
 
     // predict
-    /*const int sample_rows = 5;
+    const int sample_rows = 5;
     float test[sample_rows][cols];
     for (int i=0;i<sample_rows;i++)
         for (int j=0;j<cols;j++)
             test[i][j] = (i+1) * (j+1);
-    DMatrixHandle h_test;
+    /*DMatrixHandle h_test;
     XGDMatrixCreateFromMat((float *) test, sample_rows, cols, -1, &h_test);
-    bst_ulong out_len;
     const float *f;
-    XGBoosterPredict(h_booster, h_test, 0,0,&out_len,&f);
+    XGBoosterPredict(h_booster, h_test, 0,0,&out_len,&f);*/
+    const float *f = predict(model, (float *) test, sample_rows, cols);
 
-    for (unsigned int i=0;i<out_len;i++)
+    for (unsigned int i=0;i<sample_rows;i++)
         cout << "prediction[" << i << "]=" << f[i] << endl;
 
 
     // free xgboost internal structures
-    XGDMatrixFree(h_train[0]);
+    /*XGDMatrixFree(h_train[0]);
     XGDMatrixFree(h_test);
     XGBoosterFree(h_booster);*/
+    free_memory_model(model);
+    cout << "finished";
     return 0;
 }
 

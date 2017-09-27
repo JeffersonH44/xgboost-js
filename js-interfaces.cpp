@@ -3,7 +3,7 @@
 //
 #include "js-interfaces.h"
 
-std::pair<BoosterHandle*, DMatrixHandle*>* create_model(float* dataset, float* labels, int rows, int cols) {
+Model create_model(float* dataset, float* labels, int rows, int cols) {
     BoosterHandle* model = new BoosterHandle();
     DMatrixHandle* h_train = new DMatrixHandle();
     XGDMatrixCreateFromMat(dataset, rows, cols, -1, h_train);
@@ -13,35 +13,29 @@ std::pair<BoosterHandle*, DMatrixHandle*>* create_model(float* dataset, float* l
     return new std::pair<BoosterHandle*, DMatrixHandle*>(model, h_train);
 }
 
-void set_param(BoosterHandle* model, char* arg, char* value) {
-    printf("setting param...");
-    XGBoosterSetParam(*model, arg, value);
+void set_param(Model model, char* arg, char* value) {
+    XGBoosterSetParam(*(model->first), arg, value);
 }
 
-void train_full_model(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations) {
-    DMatrixHandle h_train[1];
-    XGDMatrixCreateFromMat(dataset, samples, dimensions, -1, &h_train[0]);
-    XGDMatrixSetFloatInfo(h_train[0], "label", labels, samples);
-    XGBoosterCreate(h_train, 1, model);
-
+void train_full_model(Model model, int iterations) {
     for (int i = 0; i < iterations; ++i) {
-        XGBoosterUpdateOneIter(*model, i, h_train[0]);
+        XGBoosterUpdateOneIter(*(model->first), i, *(model->second));
     }
-
-    XGDMatrixFree(h_train[0]);
 }
 
-const float* predict(BoosterHandle* model, float* dataset, int samples, int dimensions) {
+const float* predict(Model model, float* dataset, int samples, int dimensions) {
     DMatrixHandle h_test;
     XGDMatrixCreateFromMat(dataset, samples, dimensions, -1, &h_test);
     bst_ulong out_len;
     const float *f;
-    XGBoosterPredict(*model, h_test, 0, 0, &out_len, &f);
+    XGBoosterPredict(*(model->first), h_test, 0, 0, &out_len, &f);
     XGDMatrixFree(h_test);
 
     return f;
 }
 
-void free_memory_model(BoosterHandle* model) {
-    XGBoosterFree(*model);
+void free_memory_model(Model model) {
+    XGBoosterFree(*(model->first));
+    XGDMatrixFree(*(model->second));
+    delete model;
 }

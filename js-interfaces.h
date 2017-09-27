@@ -10,15 +10,17 @@
 #include <utility>
 #include <iostream>
 
+typedef std::pair<BoosterHandle*, DMatrixHandle*>* Model;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-std::pair<BoosterHandle*, DMatrixHandle*>* create_model(float* dataset, float* labels, int rows, int cols);
-void set_param(BoosterHandle* model, char* arg, char* value);
-void train_full_model(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations);
-const float* predict(BoosterHandle* model, float* dataset, int samples, int dimensions);
-void free_memory_model(BoosterHandle* model);
+Model create_model(float* dataset, float* labels, int rows, int cols);
+void set_param(Model model, char* arg, char* value);
+void train_full_model(Model model, int iterations);
+const float* predict(Model model, float* dataset, int samples, int dimensions);
+void free_memory_model(Model model);
 
 #ifdef __cplusplus
 }
