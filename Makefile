@@ -12,7 +12,7 @@ endif
 CFLAGS = -g -O2 -Wall -fPIC --memory-init-file 0 -std=c++11
 CFLAGS += -I$(DMLC_CORE)/include -I$(RABIT)/include -Ixgboost/include
 BUILD_DIR=dist
-EXPORTED_FUNCTIONS="['_create_model', '_set_param', '_train_full_model', '_predict', '_free_memory_model']"
+EXPORTED_FUNCTIONS="['_create_model', '_set_param', '_train_full_model', '_predict_one', '_free_memory_model']"
 COMPILED_FILES = xgboost/lib/libxgboost.bc
 
 all:

@@ -23,15 +23,15 @@ void train_full_model(Model model, int iterations) {
     }
 }
 
-const float* predict(Model model, float* dataset, int samples, int dimensions) {
+float predict_one(Model model, float* dataset, int dimensions) {
     DMatrixHandle h_test;
-    XGDMatrixCreateFromMat(dataset, samples, dimensions, -1, &h_test);
+    XGDMatrixCreateFromMat(dataset, 1, dimensions, -1, &h_test);
     bst_ulong out_len;
     const float *f;
     XGBoosterPredict(*(model->first), h_test, 0, 0, &out_len, &f);
     XGDMatrixFree(h_test);
 
-    return f;
+    return f[0];
 }
 
 void free_memory_model(Model model) {

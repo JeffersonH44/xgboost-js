@@ -9,6 +9,9 @@ async function exec() {
 
     var trainer = new XGBoost();
     trainer.train(data, labels);
+    console.log("train end");
+    console.log(labels);
+    console.log(trainer.predict(data));
     trainer.free();
     return "end of execution!";
 }

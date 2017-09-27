@@ -19,7 +19,7 @@ extern "C" {
 Model create_model(float* dataset, float* labels, int rows, int cols);
 void set_param(Model model, char* arg, char* value);
 void train_full_model(Model model, int iterations);
-const float* predict(Model model, float* dataset, int samples, int dimensions);
+float predict_one(Model model, float* dataset, int dimensions);
 void free_memory_model(Model model);
 
 #ifdef __cplusplus
