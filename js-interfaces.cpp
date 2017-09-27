@@ -3,9 +3,14 @@
 //
 #include "js-interfaces.h"
 
-BoosterHandle* create_model(float* train, int rows, int cols) {
+std::pair<BoosterHandle*, DMatrixHandle*>* create_model(float* dataset, float* labels, int rows, int cols) {
     BoosterHandle* model = new BoosterHandle();
-    DMatrixHandle h_train[1];
+    DMatrixHandle* h_train = new DMatrixHandle();
+    XGDMatrixCreateFromMat(dataset, rows, cols, -1, h_train);
+    XGDMatrixSetFloatInfo(*h_train, "label", labels, rows);
+    XGBoosterCreate(h_train, 1, model);
+
+    return new std::pair<BoosterHandle*, DMatrixHandle*>(model, h_train);
 }
 
 void set_param(BoosterHandle* model, char* arg, char* value) {

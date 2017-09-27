@@ -7,11 +7,14 @@
 
 #include "xgboost/include/xgboost/c_api.h"
 
+#include <utility>
+#include <iostream>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-BoosterHandle* create_model();
+std::pair<BoosterHandle*, DMatrixHandle*>* create_model(float* dataset, float* labels, int rows, int cols);
 void set_param(BoosterHandle* model, char* arg, char* value);
 void train_full_model(float* dataset, float* labels, int samples, int dimensions, BoosterHandle* model, int iterations);
 const float* predict(BoosterHandle* model, float* dataset, int samples, int dimensions);

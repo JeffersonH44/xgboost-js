@@ -28,4 +28,4 @@ clean:
 test:
 	cd xgboost; make -j4 config=make/minimum.mk; cd ..;
 	$(CXX) $(CFLAGS) js-interfaces.cpp -c
-	$(CXX) $(CFLAGS) main.c -o main.html $(COMPILED_FILES) js-interfaces.o
+	$(CXX) $(CFLAGS) main.cpp -o main.html $(COMPILED_FILES) -s ASSERTIONS=1 -s WASM=1 js-interfaces.o
